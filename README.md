@@ -1,6 +1,7 @@
 ### 实战小项目
 ****
 实现一个音乐播放器
+[预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/index.html)
 *****
 #### 2017.02.22
 
