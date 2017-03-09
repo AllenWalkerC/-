@@ -31,7 +31,7 @@
 
    4. 代码的注释也没写好，明天再搞！！！！！！
    
-   5. 如果狂点切歌或切换频道会出现各种各样的错误。。。。。。
+   ps:如果狂点切歌或切换频道会出现各种各样的错误。。。。。。
    
 [预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player2/music%20play2.html)
 
