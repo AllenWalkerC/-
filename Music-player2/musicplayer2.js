@@ -3,6 +3,7 @@ function MusicPlayer(){
 				this.audio = new Audio();
 				this.musicArr = [];
 				this.num = 0;
+				this.lyricNum = 0;
 				this.songName = $('.song-name');
                 this.singer = $('.singer');
                 this.musicBg = $('.music-bg');
@@ -10,7 +11,6 @@ function MusicPlayer(){
 				this.lockTime;
 				this.lyricArr = [];
 				this.lockLyric;
-				this.lyricId = [];
 				this.bind()
 			}
 			this.init()
@@ -199,7 +199,8 @@ function MusicPlayer(){
 				    	title: data.song[0].title,
 				    	artist: data.song[0].artist,
 				    	url: data.song[0].url,
-				    	picture: data.song[0].picture
+				    	picture: data.song[0].picture,
+				    	sid: data.song[0].sid
 				    };
 				this.musicArr.push(musicInfo);
 			},
@@ -209,7 +210,7 @@ function MusicPlayer(){
 				}else{
 					var data = arr[this.num-2];
 					this.addMusicInfo(data);
-					this.getLyric(this.lyricId[this.num-2])
+					this.getLyric(this.musicArr[this.num-2].sid)
 	                this.num--;
 				}
 			},
@@ -217,7 +218,7 @@ function MusicPlayer(){
 				if(arr[this.num]){
                     var data = arr[this.num];
                     this.addMusicInfo(data);
-                    this.getLyric(this.lyricId[this.num-2])
+                    this.getLyric(this.musicArr[this.num].sid)
 	                this.num++;
 				}else{
 					this.getChannel();
@@ -260,7 +261,6 @@ function MusicPlayer(){
 				if(typeof data === 'number'){
                     var id = data,
 				    _this = this;
-				    _this.lyricId.push(id);
 	                $.ajax({
 	                	url: 'http://api.jirengu.com/fm/getLyric.php',
 	                	method: 'get',
@@ -280,7 +280,6 @@ function MusicPlayer(){
 				}else{
 					var id = JSON.parse(data).song[0].sid,
 				    _this = this;
-				    _this.lyricId.push(id);
 	                $.ajax({
 	                	url: 'http://api.jirengu.com/fm/getLyric.php',
 	                	method: 'get',
