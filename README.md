@@ -1,8 +1,37 @@
-### 实战小项目
+## 实战小项目
+实现一个 私人FM
 ****
-实现一个音乐播放器
-[预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/index.html)
-*****
 #### 2017.02.22
-
 仅仅实现了基本功能，上一曲，下一曲，播放，暂停，进度条和音量条的拖动，音乐时间和进度条的同步是用setInterval实现的，但是它会一直执行，虽然时间和进度条的显示没有问题，还是觉得不好。暂时还没想到其他的方法。
+
+[预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/index.html)
+****
+#### 2017.03.10
+实在是太懒了，很早就想改进上一个版本的，一直拖到现在。升级版的音乐播放器（或者叫FM）搞定。
+
+新增:
+
+   1. 歌词同步显示。
+
+   2. 样式也完全改变了，上个版本太丑了。
+
+   3. 支持切换音乐频道
+
+上个版本的BUG：
+
+   1. 上个版本的静音图标显示错误问题。（懒得改了....）
+
+这个版本的不足之处是：
+
+   1. 虽然使用了构造函数的写法，代码还是写的有些乱，自己写着写着都晕了。
+
+   2. 对网络略差的同学可能体验不是很好。
+
+   3. 歌词同步滚动虽然实现了，但是无法让使用者自由的滚动歌词。
+
+   4. 代码的注释也没写好，明天再搞！！！！！！
+
+[预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player2/music%20play2.html)
+
+下个版本就是实现移动端的使用。完全没头绪
+****
