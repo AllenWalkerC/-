@@ -41,5 +41,5 @@
 
 修复
 
-疯狂点击切换歌曲和切换频道歌词错乱BUG，解决办法就是设置了延时，所以获取歌曲可能有些慢
+疯狂点击切换歌曲和切换频道歌词错乱BUG，解决办法每当歌词到来就清除上一首的歌词，本来想用延迟阻止用户点击，但是觉得获取歌曲太慢了，但是这样如果太快点击比如1秒几下这种还是会出问题。。。。
 [预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player2/music%20play2.html) 
