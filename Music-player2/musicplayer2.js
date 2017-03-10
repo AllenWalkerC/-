@@ -1,23 +1,27 @@
 function MusicPlayer(){
 			this.init = function(){
-				this.audio = new Audio();
-				this.musicArr = [];
-				this.num = 0;
-				this.lyricNum = 0;
-				this.songName = $('.song-name');
-                this.singer = $('.singer');
-                this.musicBg = $('.music-bg');
-				this.audio.autoplay = true;
-				this.lockTime;
-				this.lyricArr = [];
-				this.lockLyric;
-				this.bind()
+				this.audio = new Audio(); //创建一个audio对象
+				this.musicArr = []; //用于储存听过的每首歌的信息，歌名，歌手，url，背景图片，歌词id
+				this.num = 0; //用于记录听歌的数量
+				this.songName = $('.song-name'); //歌名
+                this.singer = $('.singer'); //歌手
+                this.musicBg = $('.music-bg');//歌曲背景
+				this.audio.autoplay = true; //设置audio对象只要src改变就自动播放
+				this.lockTime; //时间锁，用于同步显示时间和清除它
+				this.lyricArr = []; //临时的储存歌词，储存形式是[[时间，歌词],[时间，歌词].....]
+				this.lockLyric;  //歌词锁，用于同步显示歌词
+				this.lockLeft;   //上一曲锁，用于防止用户疯狂点击，出现的歌词错乱
+				this.lockRight;  //下一曲锁，作用同上一曲锁
+				this.lockPrev;   //上一频道锁，作用同上一曲锁
+				this.lockNext;   //下一频道锁，作用同上一曲锁
+				this.lockPlay;   //播放锁，作用同上一曲锁
+				this.bind();
 			}
 			this.init()
 		}
 		MusicPlayer.prototype = {
 			constructor: MusicPlayer,
-			getMusic: function(channel){
+			getMusic: function(channel){     //获取歌曲的函数
 				var _this = this;
 					$.ajax({
 					url: 'http://api.jirengu.com/fm/getSong.php',
@@ -32,27 +36,32 @@ function MusicPlayer(){
                     _this.getLyric(result)
 				})
 			},
-			play: function(result){
+			play: function(result){         //用于解析从服务器获取的歌曲数据
                 var data = JSON.parse(result).song[0];
                 this.addMusicInfo(data);
 			},
 			bind: function(){
 				var _this = this;
-				$('.btn-play').on('click',function(){
-					if(_this.audio.src){
-						_this.audio.play();
-						$(this).addClass('hide');
-						$('.btn-pause').removeClass('hide');
-					}else{
-                        _this.getChannel();
+				$('.btn-play').on('click',function(){   //绑定播放图标点击事件
+					if(_this.lockPlay){
+						clearTimeout(_this.lockPlay)
 					}
+					_this.lockPlay = setTimeout(function(){
+	                    if(_this.audio.src){
+							_this.audio.play();
+							$(this).addClass('hide');
+							$('.btn-pause').removeClass('hide');
+						}else{
+	                        _this.getChannel();
+						}
+					},200)					
 				})
-				$('.btn-pause').on('click',function(){
+				$('.btn-pause').on('click',function(){   //绑定暂停图标点击事件
                         $(this).addClass('hide');
 						$('.btn-play').removeClass('hide');
 						_this.audio.pause();
 				})
-				_this.audio.addEventListener('playing',function(){
+				_this.audio.addEventListener('playing',function(){  //绑定歌曲播放中的事件，包括歌曲，进度条，歌词的同步
 					    _this.lockTime = setInterval(function(){
 					    	_this.progress();
 					    	_this.time(_this.audio.currentTime,$('.real-music-time'))
@@ -64,7 +73,7 @@ function MusicPlayer(){
 							_this.showLyric(_this.synchronous)
 						},500)
 				})
-				_this.audio.addEventListener('pause',function(){
+				_this.audio.addEventListener('pause',function(){ //绑定暂停事件
                         if(_this.lockTime){
                         	clearInterval(_this.lockTime);
                         }
@@ -72,24 +81,34 @@ function MusicPlayer(){
                         	clearInterval(_this.lockLyric);
                         }
 				})
-				_this.audio.addEventListener('ended',function(){
+				_this.audio.addEventListener('ended',function(){  //绑定歌曲播放结束事件，自动获取新歌曲
 					    $('.lyric ul').empty();
 					    _this.lyricArr = [];
 					    _this.getChannel();
 				})
-				$('.btn-left').on('click',function(){
-					if((_this.num-2)>=0){
-						$('.lyric ul').empty();
-					    _this.lyricArr = [];
+				$('.btn-left').on('click',function(){  //绑定上一曲图标点击事件
+					if(_this.lockLeft){
+						clearTimeout(_this.lockLeft)
 					}
-					_this.last(_this.musicArr);
+					_this.lockLeft = setTimeout(function(){
+						if((_this.num-2)>=0){
+							$('.lyric ul').empty();
+						    _this.lyricArr = [];
+						}
+						_this.last(_this.musicArr);
+					},500)
 				})
-				$('.btn-right').on('click',function(){
-					$('.lyric ul').empty();
-					_this.lyricArr = [];
-					_this.next(_this.musicArr);
+				$('.btn-right').on('click',function(){  //绑定下一曲图标点击事件
+					if(_this.lockRight){
+						clearTimeout(_this.lockRight)
+					}
+					_this.lockRight = setTimeout(function(){
+							$('.lyric ul').empty();
+							_this.lyricArr = [];
+							_this.next(_this.musicArr);
+						},500)
 				})
-				$('.max-volume').on('click',function(){
+				$('.max-volume').on('click',function(){  //绑定最大音量图标点击事件
 					$('.real-volume-line').css({
 						'height': '110'
 					})
@@ -97,7 +116,7 @@ function MusicPlayer(){
 					$('.min-volume').removeClass('hide');
 					_this.audio.volume = 1;
 				})
-				$('.min-volume').on('click',function(){
+				$('.min-volume').on('click',function(){  //绑定最小音量图标点击事件
 					$('.real-volume-line').css({
 						'height': '0'
 					})
@@ -105,7 +124,7 @@ function MusicPlayer(){
 					$('.none-volume').removeClass('hide');
 					_this.audio.volume = 0;
 				})
-				$('.none-volume').on('click',function(){
+				$('.none-volume').on('click',function(){  //绑定静音图标点击事件
 					$(this).addClass('hide');
 					$('.min-volume').removeClass('hide');
 					_this.audio.volume = 0.5;
@@ -113,7 +132,7 @@ function MusicPlayer(){
 						'height': '55'
 					})
 				})
-				$('.song-time-line').on('click',function(e){
+				$('.song-time-line').on('click',function(e){  //绑定进度条点击事件
 					if(_this.audio.src){
 						var offset = e.clientX - $(this).offset().left;
 						$('real-song-time-time').css({
@@ -122,7 +141,7 @@ function MusicPlayer(){
 						_this.audio.currentTime = (offset*_this.audio.duration)/$(this).width();
 					}
 				})
-				$('.real-song-time-line').on('click',function(e){
+				$('.real-song-time-line').on('click',function(e){  //绑定进度条点击事件
 					if(_this.audio.src){
 						var offset = e.clientX - $('.song-time-line').offset().left;
 						$('real-song-time-time').css({
@@ -131,7 +150,7 @@ function MusicPlayer(){
 						_this.audio.currentTime = (offset*_this.audio.duration)/$('.song-time-line').width();
 					}
 				})
-				$('.volume-line').on('click',function(e){
+				$('.volume-line').on('click',function(e){  //绑定音量条点击事件
 					var offset = $(this).height()-(e.clientY - $(this).offset().top);
 					$('.real-volume-line').css({
 						'height': offset
@@ -140,7 +159,7 @@ function MusicPlayer(){
 					$('.none-volume').addClass('hide');
 					$('.min-volume').removeClass('hide');
 				})
-				$('.real-volume-line').on('click',function(e){
+				$('.real-volume-line').on('click',function(e){  //绑定音量条点击事件
 					var offset = $('.volume-line').height()-(e.clientY - $('.volume-line').offset().top);
 					$('.real-volume-line').css({
 						'height': offset
@@ -149,7 +168,7 @@ function MusicPlayer(){
 					$('.none-volume').addClass('hide');
 					$('.min-volume').removeClass('hide');
 				})
-				$('.btn-lyric').on('click',function(){
+				$('.btn-lyric').on('click',function(){ //绑定歌词图标点击事件
 					if(!$('.main').hasClass('active')){
                         $('.main').animate({
                         	left: 348
@@ -164,36 +183,46 @@ function MusicPlayer(){
                         })
 					}
 				})
-				$('.btn-pre').on('click',function(){
-					if($('.show').prev('li').length === 0){
-						$('.show').addClass('hide').removeClass('show');
-						$('.channel li').last().removeClass('hide').addClass('show');
-						$('.lyric ul').empty();
-					    _this.lyricArr = [];
-						_this.getChannel()
-					}else{
-						$('.show').removeClass('show').addClass('hide').prev('li').addClass('show').removeClass('hide');
-						$('.lyric ul').empty();
-					    _this.lyricArr = [];
-						_this.getChannel()
+				$('.btn-pre').on('click',function(){   //绑定上一频道图标点击事件
+					if(_this.lockPrev){
+						clearTimeout(_this.lockPrev)
 					}
+					_this.lockPrev = setTimeout(function(){
+                        if($('.show').prev('li').length === 0){
+							$('.show').addClass('hide').removeClass('show');
+							$('.channel li').last().removeClass('hide').addClass('show');
+							$('.lyric ul').empty();
+						    _this.lyricArr = [];
+							_this.getChannel()
+						}else{
+							$('.show').removeClass('show').addClass('hide').prev('li').addClass('show').removeClass('hide');
+							$('.lyric ul').empty();
+						    _this.lyricArr = [];
+							_this.getChannel()
+						}
+					},500)
 				})
-				$('.btn-next').on('click',function(){
-					if($('.show').next('li').length === 0){
-						$('.show').addClass('hide').removeClass('show');
-						$('.channel li').first().removeClass('hide').addClass('show');
-						$('.lyric ul').empty();
-					    _this.lyricArr = [];
-						_this.getChannel()
-					}else{
-						$('.show').removeClass('show').addClass('hide').next('li').addClass('show').removeClass('hide');
-						$('.lyric ul').empty();
-					    _this.lyricArr = [];
-						_this.getChannel()
+				$('.btn-next').on('click',function(){  //绑定下一频道图标点击事件
+					if(_this.lockNext){
+						clearTimeout(_this.lockNext)
 					}
+					_this.lockNext = setTimeout(function(){
+							if($('.show').next('li').length === 0){
+								$('.show').addClass('hide').removeClass('show');
+								$('.channel li').first().removeClass('hide').addClass('show');
+								$('.lyric ul').empty();
+							    _this.lyricArr = [];
+								_this.getChannel()
+							}else{
+								$('.show').removeClass('show').addClass('hide').next('li').addClass('show').removeClass('hide');
+								$('.lyric ul').empty();
+							    _this.lyricArr = [];
+								_this.getChannel()
+							}
+					},500)
 				})
 			},
-			addMusic: function(result){
+			addMusic: function(result){   //将歌曲信息添加到数组中保存
 				var data = JSON.parse(result),
 				    musicInfo = {
 				    	title: data.song[0].title,
@@ -204,7 +233,7 @@ function MusicPlayer(){
 				    };
 				this.musicArr.push(musicInfo);
 			},
-			last: function(arr){
+			last: function(arr){          //上一曲函数
 				if((this.num-2)<0){
                   alert('这是你听过的第一首歌')
 				}else{
@@ -214,7 +243,7 @@ function MusicPlayer(){
 	                this.num--;
 				}
 			},
-			next: function(arr){
+			next: function(arr){          //下一曲函数
 				if(arr[this.num]){
                     var data = arr[this.num];
                     this.addMusicInfo(data);
@@ -224,7 +253,7 @@ function MusicPlayer(){
 					this.getChannel();
 				}
 			},
-			addMusicInfo: function(data){
+			addMusicInfo: function(data){     //将歌曲信息添加到页面
                 this.songName.text(data.title);
                 this.songName.attr('title',data.title);
                 this.singer.text(data.artist);
@@ -234,7 +263,7 @@ function MusicPlayer(){
                 })
                 this.audio.src = data.url;
 			},
-			time: function(num,$ele){
+			time: function(num,$ele){          //时间转换函数
                 var minute = parseInt(num/60),
                     second = parseInt(num%60);
                 if(second>=10){
@@ -249,7 +278,7 @@ function MusicPlayer(){
                 }
                 $ele.text(minute+':'+second)
 			},
-			progress: function(){
+			progress: function(){             //进度条显示函数
                 var time = this.audio.duration,
                     currentTime = this.audio.currentTime,
                     length = $('.song-time-line').width();
@@ -257,7 +286,7 @@ function MusicPlayer(){
                 	'width': length*currentTime/time
                 })
 			},
-			getLyric: function(data){
+			getLyric: function(data){         //获取歌词函数
 				if(typeof data === 'number'){
                     var id = data,
 				    _this = this;
@@ -298,7 +327,7 @@ function MusicPlayer(){
 	                })
 				}
 			},
-			formatLyric: function(str){
+			formatLyric: function(str){        //解析歌词存入临时数组
 				var _this = this,
 				    lyric = str.split('\n'),
 				    reg = /\[\d{2}:\d{2}.\d{2}\]/g;
@@ -316,14 +345,14 @@ function MusicPlayer(){
 						}
 				    })
 			},
-			addLyric: function(arr){
+			addLyric: function(arr){         //将歌词放到页面
                 $.each(arr,function(i,v){
                 	var li = $('<li></li>');
                 	li.text(v[1]);
                 	$('.lyric ul').append(li);
                 })
 			},
-			showLyric: function(fn){
+			showLyric: function(fn){         //将歌词同步颜色改变
 				var _this = this,
                     i = 0;
 				    lyricList = $('.lyric ul>li')
@@ -336,7 +365,7 @@ function MusicPlayer(){
 					})
 					fn.bind(_this)()
 			},
-			synchronous: function(){
+			synchronous: function(){         //同步滚动歌词
 				var lyric = $('.lyric');
 				if($('.change-color').length !== 0){
                     if(($('.change-color').offset().top+lyric.scrollTop()) > (lyric.height()+lyric.scrollTop())){
@@ -346,7 +375,7 @@ function MusicPlayer(){
                     }
 				}
 			},
-			getChannel: function(){
+			getChannel: function(){           //获取频道
                 var channelStr = $('.show').text(),
                     channelId = '',
                     _this = this;
