@@ -41,4 +41,5 @@
 
 修复
 
-疯狂点击切换歌曲和切换频道歌词错乱BUG
+疯狂点击切换歌曲和切换频道歌词错乱BUG，解决办法就是设置了延时，所以获取歌曲可能有些慢
+[预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player2/music%20play2.html)
