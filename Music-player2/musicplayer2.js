@@ -30,10 +30,12 @@ function MusicPlayer(){
 						channel: channel
 					}
 				}).done(function(result){
+					$('.lyric ul').empty();
+					_this.lyricArr = [];
                     _this.play(result);
                     _this.num++;
                     _this.addMusic(result);
-                    _this.getLyric(result)
+                    _this.getLyric(result);
 				})
 			},
 			play: function(result){         //用于解析从服务器获取的歌曲数据
@@ -43,18 +45,13 @@ function MusicPlayer(){
 			bind: function(){
 				var _this = this;
 				$('.btn-play').on('click',function(){   //绑定播放图标点击事件
-					if(_this.lockPlay){
-						clearTimeout(_this.lockPlay)
-					}
-					_this.lockPlay = setTimeout(function(){
 	                    if(_this.audio.src){
 							_this.audio.play();
 							$(this).addClass('hide');
 							$('.btn-pause').removeClass('hide');
 						}else{
 	                        _this.getChannel();
-						}
-					},200)					
+						}				
 				})
 				$('.btn-pause').on('click',function(){   //绑定暂停图标点击事件
                         $(this).addClass('hide');
@@ -82,31 +79,13 @@ function MusicPlayer(){
                         }
 				})
 				_this.audio.addEventListener('ended',function(){  //绑定歌曲播放结束事件，自动获取新歌曲
-					    $('.lyric ul').empty();
-					    _this.lyricArr = [];
 					    _this.getChannel();
 				})
 				$('.btn-left').on('click',function(){  //绑定上一曲图标点击事件
-					if(_this.lockLeft){
-						clearTimeout(_this.lockLeft)
-					}
-					_this.lockLeft = setTimeout(function(){
-						if((_this.num-2)>=0){
-							$('.lyric ul').empty();
-						    _this.lyricArr = [];
-						}
-						_this.last(_this.musicArr);
-					},500)
+					_this.last(_this.musicArr);
 				})
 				$('.btn-right').on('click',function(){  //绑定下一曲图标点击事件
-					if(_this.lockRight){
-						clearTimeout(_this.lockRight)
-					}
-					_this.lockRight = setTimeout(function(){
-							$('.lyric ul').empty();
-							_this.lyricArr = [];
-							_this.next(_this.musicArr);
-						},500)
+					_this.next(_this.musicArr);
 				})
 				$('.max-volume').on('click',function(){  //绑定最大音量图标点击事件
 					$('.real-volume-line').css({
@@ -184,42 +163,24 @@ function MusicPlayer(){
 					}
 				})
 				$('.btn-pre').on('click',function(){   //绑定上一频道图标点击事件
-					if(_this.lockPrev){
-						clearTimeout(_this.lockPrev)
-					}
-					_this.lockPrev = setTimeout(function(){
                         if($('.show').prev('li').length === 0){
 							$('.show').addClass('hide').removeClass('show');
 							$('.channel li').last().removeClass('hide').addClass('show');
-							$('.lyric ul').empty();
-						    _this.lyricArr = [];
 							_this.getChannel()
 						}else{
 							$('.show').removeClass('show').addClass('hide').prev('li').addClass('show').removeClass('hide');
-							$('.lyric ul').empty();
-						    _this.lyricArr = [];
 							_this.getChannel()
 						}
-					},500)
 				})
 				$('.btn-next').on('click',function(){  //绑定下一频道图标点击事件
-					if(_this.lockNext){
-						clearTimeout(_this.lockNext)
-					}
-					_this.lockNext = setTimeout(function(){
-							if($('.show').next('li').length === 0){
-								$('.show').addClass('hide').removeClass('show');
-								$('.channel li').first().removeClass('hide').addClass('show');
-								$('.lyric ul').empty();
-							    _this.lyricArr = [];
-								_this.getChannel()
-							}else{
-								$('.show').removeClass('show').addClass('hide').next('li').addClass('show').removeClass('hide');
-								$('.lyric ul').empty();
-							    _this.lyricArr = [];
-								_this.getChannel()
-							}
-					},500)
+						if($('.show').next('li').length === 0){
+							$('.show').addClass('hide').removeClass('show');
+							$('.channel li').first().removeClass('hide').addClass('show');
+							_this.getChannel()
+						}else{
+							$('.show').removeClass('show').addClass('hide').next('li').addClass('show').removeClass('hide');
+							_this.getChannel()
+						}
 				})
 				$('.toggle').on('click',function(){
 					$('.channel').fadeToggle(1000);
@@ -308,6 +269,8 @@ function MusicPlayer(){
 	                		sid: id
 	                	}
 	                }).done(function(result){
+                        $('.lyric ul').empty();
+					    _this.lyricArr = [];
 	                	var reg = /Warning/g;
 	                	if(reg.test(result)){
 	                		var li = $('<li>此歌曲没有歌词</li>');
@@ -327,6 +290,8 @@ function MusicPlayer(){
 	                		sid: id
 	                	}
 	                }).done(function(result){
+	                	$('.lyric ul').empty();
+					    _this.lyricArr = [];
 	                	var reg = /Warning/g;
 	                	if(reg.test(result)){
 	                		var li = $('<li>此歌曲没有歌词</li>');
@@ -394,6 +359,8 @@ function MusicPlayer(){
                 	url: 'http://api.jirengu.com/fm/getChannels.php',
                 	method: 'get'
                 }).done(function(result){
+                	$('.lyric ul').empty();
+					_this.lyricArr = [];
                 	var channelList = JSON.parse(result).channels;
                 	$.each(channelList,function(index,value){
                 		if(value.name === channelStr){
