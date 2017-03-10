@@ -38,8 +38,9 @@
             padding-bottom: 10px;
 		}
 		.main{
-			width: 380px;
-			height: 500px;
+            border: 1px solid #272D34;
+			width: 382px;
+			height: 502px;
 			position: absolute;
 			left: 60px;
 			background-color: #F7F7F7;
@@ -55,14 +56,14 @@
 			padding-left: 28px;
 			padding-right: 20px;
 		}
-		@font-face {
-			  font-family: 'iconfont-music';  /* project id 247191 */
-			  src: url('http://at.alicdn.com/t/font_uqj6le5sysnhfr.eot');
-			  src: url('http://at.alicdn.com/t/font_uqj6le5sysnhfr.eot?#iefix') format('embedded-opentype'),
-			  url('http://at.alicdn.com/t/font_uqj6le5sysnhfr.woff') format('woff'),
-			  url('http://at.alicdn.com/t/font_uqj6le5sysnhfr.ttf') format('truetype'),
-			  url('http://at.alicdn.com/t/font_uqj6le5sysnhfr.svg#iconfont') format('svg');
-		}
+        @font-face {
+          font-family: 'iconfont-music';  /* project id 247191 */
+          src: url('http://at.alicdn.com/t/font_236ykcpi7y6tj4i.eot');
+          src: url('http://at.alicdn.com/t/font_236ykcpi7y6tj4i.eot?#iefix') format('embedded-opentype'),
+          url('http://at.alicdn.com/t/font_236ykcpi7y6tj4i.woff') format('woff'),
+          url('http://at.alicdn.com/t/font_236ykcpi7y6tj4i.ttf') format('truetype'),
+          url('http://at.alicdn.com/t/font_236ykcpi7y6tj4i.svg#iconfont') format('svg');
+        }
 		.iconfont-music{
 			font-family:"iconfont-music" !important;
 			font-style:normal;
@@ -174,14 +175,15 @@
         .channel{
         	position: absolute;
         	width: 100%;
-            bottom: 20px;
+            top: 451px;
             text-align: center;
-        }
-        .channel>p{
-        	display: inline-block;
-        	margin-right: 40px;
-        	margin-left: 40px;
-        	vertical-align: middle;
+            background-color: #272D34;
+            color: #fff;
+            height: 50px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            padding-top: 15px;
+            display: none;
         }
         .channel>.btn-pre,.channel>.btn-next{
         	font-size: 25px;
@@ -204,9 +206,6 @@
         .lyric>ul{
         	position: absolute;
         }
-        .change-color{
-        	color: #fff;
-        }
         .channel>div>ul::after{
             content: '';
             clear: both;
@@ -225,4 +224,24 @@
         	position: absolute;
         	height: 25px;
         	width: 100px;
+        }
+        .toggle{
+            position: absolute;
+            top: 455px;
+            left: 20px;
+            font-size: 40px;
+            z-index: 10;
+            color: #1D388E;
+        }
+        .change-color{
+            color: #fff;
+        }
+        .show-btn{
+            position: absolute;
+            top: 20px;
+            left: 350px;
+            font-size: 50px;
+        }
+        .ct{
+            display: none;
         }

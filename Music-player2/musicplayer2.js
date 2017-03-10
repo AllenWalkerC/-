@@ -221,6 +221,17 @@ function MusicPlayer(){
 							}
 					},500)
 				})
+				$('.toggle').on('click',function(){
+					$('.channel').fadeToggle(1000);
+					if($(this).hasClass('change-color')){
+						$(this).removeClass('change-color')
+					}else{
+						$(this).addClass('change-color')
+					}
+				})
+				$('.show-btn').on('click',function(){
+					$('.ct').slideToggle(1000)
+				})
 			},
 			addMusic: function(result){   //将歌曲信息添加到数组中保存
 				var data = JSON.parse(result),
