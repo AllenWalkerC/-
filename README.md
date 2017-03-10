@@ -30,7 +30,9 @@
    3. 歌词同步滚动虽然实现了，但是无法让使用者自由的滚动歌词。
 
    4. 代码的注释也没写好，明天再搞！！！！！！
-
+   
+   ps:如果狂点切歌或切换频道会出现各种各样的错误。。。。。。
+   
 [预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player2/music%20play2.html)
 
 下个版本就是实现移动端的使用。完全没头绪
