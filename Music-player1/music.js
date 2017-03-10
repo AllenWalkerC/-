@@ -141,10 +141,14 @@
         	var drag = e.clientX-start;
             realVolumeLine.css('width',drag);
             audio.volume = parseFloat(drag/volumeLine.width());
+            volumeIconNone.addClass('hide');
+            volumeIconMin.removeClass('hide');
         })
         realVolumeLine.on('click',function(e){
         	var start = volumeLine.offset().left;
         	var drag = e.clientX-start;
             realVolumeLine.css('width',drag);
             audio.volume = parseFloat(drag/volumeLine.width());
+            volumeIconNone.addClass('hide');
+            volumeIconMin.removeClass('hide');
         })
