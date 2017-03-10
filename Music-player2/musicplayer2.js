@@ -10,11 +10,6 @@ function MusicPlayer(){
 				this.lockTime; //时间锁，用于同步显示时间和清除它
 				this.lyricArr = []; //临时的储存歌词，储存形式是[[时间，歌词],[时间，歌词].....]
 				this.lockLyric;  //歌词锁，用于同步显示歌词
-				this.lockLeft;   //上一曲锁，用于防止用户疯狂点击，出现的歌词错乱
-				this.lockRight;  //下一曲锁，作用同上一曲锁
-				this.lockPrev;   //上一频道锁，作用同上一曲锁
-				this.lockNext;   //下一频道锁，作用同上一曲锁
-				this.lockPlay;   //播放锁，作用同上一曲锁
 				this.bind();
 			}
 			this.init()
@@ -82,10 +77,16 @@ function MusicPlayer(){
 					    _this.getChannel();
 				})
 				$('.btn-left').on('click',function(){  //绑定上一曲图标点击事件
-					_this.last(_this.musicArr);
+					if(!$(this).hasClass('lock')){
+						$(this).addClass('lock')
+						_this.last(_this.musicArr);
+					}
 				})
 				$('.btn-right').on('click',function(){  //绑定下一曲图标点击事件
-					_this.next(_this.musicArr);
+					if(!$(this).hasClass('lock')){
+						$(this).addClass('lock')
+					    _this.next(_this.musicArr);
+					}
 				})
 				$('.max-volume').on('click',function(){  //绑定最大音量图标点击事件
 					$('.real-volume-line').css({
@@ -163,23 +164,27 @@ function MusicPlayer(){
 					}
 				})
 				$('.btn-pre').on('click',function(){   //绑定上一频道图标点击事件
-                        if($('.show').prev('li').length === 0){
-							$('.show').addClass('hide').removeClass('show');
-							$('.channel li').last().removeClass('hide').addClass('show');
-							_this.getChannel()
-						}else{
-							$('.show').removeClass('show').addClass('hide').prev('li').addClass('show').removeClass('hide');
-							_this.getChannel()
-						}
+                        if(!$(this).hasClass('lock')){
+                        	if($('.show').prev('li').length === 0){
+								$('.show').addClass('hide').removeClass('show');
+								$('.channel li').last().removeClass('hide').addClass('show');
+								_this.getChannel()
+							}else{
+								$('.show').removeClass('show').addClass('hide').prev('li').addClass('show').removeClass('hide');
+								_this.getChannel()
+							}
+                        }
 				})
 				$('.btn-next').on('click',function(){  //绑定下一频道图标点击事件
-						if($('.show').next('li').length === 0){
-							$('.show').addClass('hide').removeClass('show');
-							$('.channel li').first().removeClass('hide').addClass('show');
-							_this.getChannel()
-						}else{
-							$('.show').removeClass('show').addClass('hide').next('li').addClass('show').removeClass('hide');
-							_this.getChannel()
+						if(!$(this).hasClass('lock')){
+							if($('.show').next('li').length === 0){
+								$('.show').addClass('hide').removeClass('show');
+								$('.channel li').first().removeClass('hide').addClass('show');
+								_this.getChannel()
+							}else{
+								$('.show').removeClass('show').addClass('hide').next('li').addClass('show').removeClass('hide');
+								_this.getChannel()
+							}
 						}
 				})
 				$('.toggle').on('click',function(){
@@ -208,11 +213,13 @@ function MusicPlayer(){
 			last: function(arr){          //上一曲函数
 				if((this.num-2)<0){
                   alert('这是你听过的第一首歌')
+                  $('.btn-left').removeClass('lock')
 				}else{
 					var data = arr[this.num-2];
 					this.addMusicInfo(data);
 					this.getLyric(this.musicArr[this.num-2].sid)
 	                this.num--;
+	                $('.btn-left').removeClass('lock')
 				}
 			},
 			next: function(arr){          //下一曲函数
@@ -221,8 +228,10 @@ function MusicPlayer(){
                     this.addMusicInfo(data);
                     this.getLyric(this.musicArr[this.num].sid)
 	                this.num++;
+	                $('.btn-right').removeClass('lock')
 				}else{
 					this.getChannel();
+					$('.btn-right').removeClass('lock')
 				}
 			},
 			addMusicInfo: function(data){     //将歌曲信息添加到页面
@@ -327,6 +336,9 @@ function MusicPlayer(){
                 	li.text(v[1]);
                 	$('.lyric ul').append(li);
                 })
+                $('.btn-pre').removeClass('lock');
+                $('.btn-next').removeClass('lock');
+
 			},
 			showLyric: function(fn){         //将歌词同步颜色改变
 				var _this = this,
