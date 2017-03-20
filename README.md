@@ -1,6 +1,6 @@
 ## 实战小项目
 实现一个 随机音乐播放器
-(预览)[http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player3/music-play3.html]可能会有些慢
+[预览](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player3/music-play3.html)可能会有些慢
 源码直接看Music-player3文件夹里的就行了。
 ****
 #### 2017.02.22
@@ -48,4 +48,4 @@
 #### 2017.03.20
 
 这个版本改进了外观，基本就这样了。
-(预览)[http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player3/music-play3.html]
+[预览](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player3/music-play3.html)
