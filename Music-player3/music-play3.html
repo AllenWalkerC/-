@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>music-player3</title>
+	<meta name="referrer" content="never">
+    <link rel="stylesheet" href="music-player3.css">
+</head>
+<body>
+	<div id="music-box">
+		<div id="control-left">
+        <ul>
+			<li class="channel iconfont-music">&#xe634;</li>
+			<li class="lyric-btn iconfont-music">&#xe600;</li>
+			<li class="play iconfont-music">&#xe62d;</li>
+			<li class="pause iconfont-music hide">&#xe62c;</li>
+			<li class="next iconfont-music">&#xe62e;</li>
+			<li class="volume-line"></li>
+			<li class="real-volume-line"></li>
+			<li class="volume-max iconfont-music">&#xe630;</li>
+			<li class="volume-min iconfont-music hide">&#xe62f;</li>        	
+        </ul>
+		</div>
+		<div id="music-info">
+			<div class="music-picture"></div>
+			<h3 class="music-name"></h3>
+			<p class="singer"></p>
+			<div class="progress">
+				<div class="real-time">00:00</div>
+				<div class="real-time-line"></div>
+				<div class="time-line"></div>
+				<div class="time">00:00</div>
+			</div>
+		</div>
+		<div id="control-right">
+			<div class="pack-up iconfont-music">&#xe632;</div>
+			<div class="music-list iconfont-music">&#xe841;</div>
+		</div>
+		<div id="lyric">
+			<ul></ul>
+		</div>
+		<div id="history">
+		     <ul></ul>
+		</div>
+		<div id="channel-list">
+			<ul class="clearfix">
+            	<li>漫步春天</li>
+            	<li>秋日私语</li>
+            	<li>温暖冬日</li>
+            	<li>热歌</li>
+            	<li>KTV金曲</li>
+            	<li>Billboard</li>
+            	<li>成名曲</li>
+            	<li>网络歌曲</li>
+            	<li>开车</li>
+            	<li>影视</li>
+            	<li class="active">随便听听</li>
+            	<li>经典老歌</li>
+            	<li>70后</li>
+            	<li>80后</li>
+            	<li>90后</li>
+            	<li>火爆新歌</li>
+            	<li>儿歌</li>
+            	<li>旅行</li>
+            	<li>夜店</li>
+            	<li>流行</li>
+            	<li>摇滚</li>
+            	<li>民谣</li>
+            	<li>轻音乐</li>
+            	<li>小清新</li>
+            	<li>中国风</li>
+            	<li>DJ舞曲</li>
+            	<li>电影</li>
+            	<li>轻松假日</li>
+            	<li>欢快旋律</li>
+            	<li>甜蜜感受</li>
+            	<li>寂寞</li>
+            	<li>单身情歌</li>
+            	<li>舒缓节奏</li>
+            	<li>慵懒午后</li>
+            	<li>伤感</li>
+            	<li>华语</li>
+            	<li>欧美</li>
+            	<li>日语</li>
+            	<li>韩语</li>
+            	<li>粤语</li>
+			</ul>
+		</div>
+	</div>
+	<div id="mini-music-box" class="clearfix">
+		<div class="mini-play iconfont-music">&#xe62d;</div>
+		<div class="mini-pause iconfont-music hide">&#xe62c;</div>
+		<div class="mini-next iconfont-music">&#xe62e;</div>
+		<div class="ct">
+			<h4 class=" mini-music-name"></h4>
+		    <p class=" mini-singer"></p>
+		</div>
+		<div class="pack-down iconfont-music">&#xe632;</div>
+	</div>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+	<script src="music-player3.js"></script>
+</body>
+</html>
