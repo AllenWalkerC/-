@@ -228,6 +228,8 @@
                 	$('.pause').removeClass('hide');
                 	$('.mini-play').addClass('hide');
                 	$('.mini-pause').removeClass('hide');
+                    $('#history li').eq(_this.num-1).siblings('li').removeClass('change-color');
+                    $('#history li').eq(_this.num-1).addClass('change-color');
                 })
                 $(_this.audio).on('pause',function(){
                 	clearInterval(_this.timeLock);
@@ -360,7 +362,7 @@
 			analysisLyric: function(result,fn){
 				var lyric = result.split('\n'),
 				    lyricArr = [];
-				    reg = /\[\d{2}:\d{2}.\d{2}\]/g;
+				    reg = /\[\d{2}:\d{2}\.\d{2}\]/g;
 				$.each(lyric,function(index,value){
 					if(reg.test(value)){
 						for(var i = 0;i<value.match(reg).length;i++){
@@ -434,7 +436,8 @@
 			},
 			historyScroll: function(){
 				var index = $('#history li').last().index();
-                $('#history').scrollTop(index*50)
+                $('#history').scrollTop(index*50);
+
 			}
 		}
 		var music = new MusicPlayer();
