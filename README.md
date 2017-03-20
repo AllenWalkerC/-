@@ -1,5 +1,11 @@
 ## 实战小项目
-实现一个 私人FM
+实现一个 随机音乐播放器
+
+[预览](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player3/music-play3.html)
+
+可能会有些慢
+
+源码直接看Music-player3文件夹里的就行了。
 ****
 #### 2017.02.22
 仅仅实现了基本功能，上一曲，下一曲，播放，暂停，进度条和音量条的拖动，音乐时间和进度条的同步是用setInterval实现的，但是它会一直执行，虽然时间和进度条的显示没有问题，还是觉得不好。暂时还没想到其他的方法。
@@ -7,7 +13,7 @@
 [预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player1/index.html)
 ****
 #### 2017.03.10
-实在是太懒了，很早就想改进上一个版本的，一直拖到现在。升级版的音乐播放器（或者叫FM）搞定。
+实在是太懒了，很早就想改进上一个版本的，一直拖到现在。
 
 新增:
 
@@ -35,11 +41,15 @@
    
 [预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player2/music%20play2.html)
 
-下个版本就是实现移动端的使用。完全没头绪
 ****
 #### 2017.03.10
 
 修复
 
-疯狂点击切换歌曲和切换频道歌词错乱BUG，解决办法每当歌词到来就清除上一首的歌词，本来想用延迟阻止用户点击，但是觉得获取歌曲太慢了，但是这样如果太快点击比如1秒几下这种还是会出问题。。。。
+疯狂点击切换歌曲和切换频道歌词错乱BUG，解决办法每当歌词到来就清除上一首的歌词，本来想用延迟阻止用户点击，但是觉得获取歌曲太慢了。
 [预览地址](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player2/music%20play2.html) 
+
+#### 2017.03.20
+
+这个版本改进了外观，基本就这样了。
+[预览](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player3/music-play3.html)
