@@ -1,7 +1,7 @@
 ## 实战小项目
 实现一个 随机音乐播放器
 
-[预览](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player3/music-play3.html)
+[预览](http://caishiran.top/Music-player/Music-player3/music-play3.html)
 
 可能会有些慢
 
