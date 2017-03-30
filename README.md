@@ -52,4 +52,4 @@
 #### 2017.03.20
 
 这个版本改进了外观，基本就这样了。
-[预览](http://htmlpreview.github.io/?https://github.com/AllenWalkerC/Music-player/blob/master/Music-player3/music-play3.html)
+[预览](http://caishiran.top/Music-player/Music-player3/music-play3.html)
